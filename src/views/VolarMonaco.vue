@@ -12,9 +12,10 @@
 	import { onMounted, ref } from 'vue';
 
 	const monacoeditorcontainer = ref<HTMLElement | null>(null);
-	let editorInstance: unknown;
+	let codeEditor: unknown;
+	const theme = await loadTheme();
 
-	const loadOnigasm = async () => onigasm.loadWASM(onigasmWasm);
+	const loadOnigasm = () => onigasm.loadWASM(onigasmWasm);
 
 	const loadMonacoEnv = () => {
 		(self as any).MonacoEnvironment = {
@@ -28,30 +29,14 @@
 	}
 
 	onMounted(() => {
-		Promise.all([ loadMonacoEnv(), loadOnigasm(), loadTheme() ]).then(([ , , theme]) => {
-
-			// Check for valid element.
+		Promise.all([ loadOnigasm, loadMonacoEnv, prepareVirtualFiles]).then(async () => {
 			if (!monacoeditorcontainer.value) return;
-
-			// Prepare the virtual files.
-			prepareVirtualFiles();
-
-			// Create the editor.
-			const editorInstance = editor.create(monacoeditorcontainer.value, {
+			const codeEditor = editor.create(monacoeditorcontainer.value, {
 				theme,
 				language: 'vue',
-				automaticLayout: true,
-				scrollBeyondLastLine: false,
-				minimap: {
-					enabled: false,
-				},
-				inlineSuggest: {
-					enabled: false,
-				},
 				value: '<template>\n\t<div>Hello World</div>\n</template>',
 			});
-
-			loadGrammars(editorInstance);
+			await loadGrammars(codeEditor);
 		});
 	});
 </script>

@@ -11,6 +11,10 @@
     "codemirror-editor-vue3": "^2.1.7",
     "common-tags": "^1.8.2",
     "monaco-editor": "^0.33.0",
+    "monaco-editor-core": "^0.33.0",
+    "monaco-volar": "^0.0.2",
+    "onigasm": "^2.2.5",
+    "path2": "^0.1.0",
     "vite-plugin-monaco-editor": "^1.0.10",
     "vue": "^3.2.25",
     "vue-router": "^4.0.16"
