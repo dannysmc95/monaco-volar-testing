@@ -1,11 +1,9 @@
 <template>
-	<header>
-		<router-link to="/">Home</router-link>&nbsp;|&nbsp;
-		<router-link to="/monaco">Monaco</router-link>&nbsp;|&nbsp;
-		<router-link to="/codemirror">CodeMirror</router-link>
-	</header>
-
 	<main>
-		<router-view />
+		<Monaco />
 	</main>
 </template>
+
+<script setup lang="ts">
+	import Monaco from './components/Monaco.vue';
+</script>
